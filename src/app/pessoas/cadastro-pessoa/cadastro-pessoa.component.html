@@ -1,0 +1,84 @@
+<div class="meu-container">
+    <form #frmPessoa="ngForm" (ngSubmit)="salvar(frmPessoa)">
+      <!--
+        1)ui-fluid - componente recebera 100% de withit quando usado dentro de um grid,
+      ficando com a largura da grid disponivel para ele.
+      Como quero q a ultima div fique sem ui-fluid, para cada div coloco ui-fluid, exceto a ultima
+      Se colocasse logo na div pai-de-todos, nap daria pra ajustar
+        2) p-calendar precisa: import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; -->
+
+      <div class="ui-g">
+
+        <div class="ui-g-12 ui-fluid">
+          <h1> {{ pessoa.codigo ? 'Alterar' : 'Incluir' }} Pessoa</h1>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+            <p-fieldset legend="Dados pessoais">
+              <label>Nome</label>
+              <input pInputText type="text" name="txtNome" [(ngModel)]="pessoa.nome" #ctrlNome="ngModel" required minlength="5">
+              <app-msg [controle]="ctrlNome" erro="required" msg="Informe um nome"></app-msg>
+              <app-msg [controle]="ctrlNome" erro="minlength"
+                        msg="Deve ter no mínimo de {{ ctrlNome.errors?.minlength?.requiredLength }} caracteres."></app-msg>
+            </p-fieldset>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+            <p-fieldset legend="Endereço">
+
+              <div class="ui-g-12 ui-md-9">
+                  <label>Logradouro(Rua, Avenida, etc...)</label>
+                  <input pInputText type="text" name="txtRua" [(ngModel)]="pessoa.endereco.logradouro" #ctrlRua="ngModel" required>
+                  <app-msg [controle]="ctrlRua" erro="required" msg="Campo obrigatório"></app-msg>
+                </div>
+
+                <div class="ui-g-12 ui-md-3">
+                  <label>Número</label>
+                  <input pInputText type="text" name="txtNumero" [(ngModel)]="pessoa.endereco.numero" #ctrlNumero="ngModel" required>
+                  <app-msg [controle]="ctrlNumero" erro="required" msg="Campo obrigatório"></app-msg>
+                </div>
+
+                <div class="ui-g-12 ui-md-4">
+                  <label>Complemento</label>
+                  <input pInputText type="text" name="txtCompl" [(ngModel)]="pessoa.endereco.complemento" #ctrlCompl="ngModel">
+                </div>
+
+                <div class="ui-g-12 ui-md-5">
+                  <label>Bairro</label>
+                  <input pInputText type="text" name="txtBairro" [(ngModel)]="pessoa.endereco.bairro" #ctrlBairro="ngModel" required>
+                  <app-msg [controle]="ctrlBairro" erro="required" msg="Campo obrigatório"></app-msg>
+                </div>
+
+                <div class="ui-g-12 ui-md-3">
+                  <label>CEP {{ ctrlCep.errors | json }}</label>
+                  <p-inputMask mask="99999-999" name="txtCep" [(ngModel)]="pessoa.endereco.cep"  #ctrlCep="ngModel" required minlength="9" (onBlur)="digitou(ctrlCep)"></p-inputMask>
+                  <app-msg [controle]="ctrlCep" erro="required" msg="Campo obrigatório"></app-msg>
+                  <app-msg [controle]="ctrlCep" erro="minlength" msg="Minimo"></app-msg>
+                </div>
+
+                <div class="ui-g-12 ui-md-9">
+                  <label>Cidade</label>
+                  <input pInputText type="text" name="txtCidade" [(ngModel)]="pessoa.endereco.cidade" #ctrlCidade="ngModel" required>
+                  <app-msg [controle]="ctrlCidade" erro="required" msg="Campo obrigatório"></app-msg>
+                </div>
+
+                <div class="ui-g-12 ui-md-3">
+                  <label>Estado</label>
+                  <input pInputText type="text" name="txtEstado" [(ngModel)]="pessoa.endereco.estado" #ctrlEstado="ngModel" required>
+                  <app-msg [controle]="ctrlEstado" erro="required" msg="Campo obrigatório"></app-msg>
+              </div>
+
+            </p-fieldset>
+        </div>
+
+        <div class="ui-g-12">
+            <button pButton type="submit" label="Salvar" [disabled]="frmPessoa.invalid" ></button>
+            <button pButton type="button" label=" {{ frmPessoa.dirty ? 'Limpar tudo' : 'Novo'  }}" class="ui-button-info" (click)="novo(frmPessoa)"></button>
+            <!--    Dava pra colocar um routerlink no botão. Feito assim, para mostrar naveg programatica-->
+            <a routerLink="/pessoas">Voltar para a pesquisa</a>
+        </div>
+
+      </div>
+
+    </form>
+  </div>

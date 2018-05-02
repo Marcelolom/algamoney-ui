@@ -1,0 +1,57 @@
+<!--
+  <app-tabela-pessoas [pessoas]="pessoas"></app-tabela-pessoas>
+-->
+<p-table [value]="pessoas" lazy="true" paginator="true" responsive="true"
+          [rows]="filtro.itensPorPagina" [totalRecords]="totalDeRegistros"
+          (onLazyLoad)="ocorreuPaginacao($event)">
+
+    <ng-template pTemplate="caption">
+        Pessoas: {{ totalDeRegistros }} registro(s) encontrado(s).
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="col-header-90px"></th>
+        <th>Nome</th>
+        <th>Cidade</th>
+        <th class="col-header-90px">Estado</th>
+        <th class="col-header-170px">Ativo?</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-pessoa>
+      <tr>
+        <td class="col-centro" >
+            <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></button>
+            <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+        </td>
+        <td>
+          <span class="ui-column-title">Nome:</span>
+          {{pessoa.nome}}
+        </td>
+        <td>
+          <span class="ui-column-title">Cidade:</span>
+          {{pessoa.endereco.cidade}}
+        </td>
+        <td class="col-centro">
+          <span class="ui-column-title">Estado:</span>
+          {{pessoa.endereco.estado}}
+        </td>
+        <td class="col-centro">
+          <span class="ui-column-title">Status:</span>
+          <p-inputSwitch onLabel="Sim" offLabel="Não"
+                  [pTooltip]="pessoa.ativo ? 'desativar' : 'ativar'"
+                  tooltipPosition="bottom" [(ngModel)] = "pessoa.ativo">
+          </p-inputSwitch>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-colunas>
+        <tr>
+            <td colspan="5">
+                Nenhum registro disponível
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

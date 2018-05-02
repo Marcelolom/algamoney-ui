@@ -1,0 +1,85 @@
+<div class="meu-container">
+  <form #frmLancamento="ngForm" autocomplete="off" (ngSubmit)="salvar(frmLancamento)">
+    <!--
+      1)ui-fluid - componente recebera 100% de withit quando usado dentro de um grid,
+    ficando com a largura da grid disponivel para ele.
+    Como quero q a ultima div fique sem ui-fluid, para cada div coloco ui-fluid, exceto a ultima
+    Se colocasse logo na div pai-de-todos, nap daria pra ajustar
+      2) p-calendar precisa: import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; -->
+
+    <div class="ui-g">
+      <div class="ui-g-12 ui-fluid">
+        <h1> {{ lancamento.codigo ? 'Alteração' : 'Inclusão' }} de Lançamento</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <p-selectButton [options]="tipos" name="selbtnTipo" [(ngModel)]="lancamento.tipo" #ctrlTipo="ngModel" required></p-selectButton>
+      </div>
+
+      <div class="ui-g-6 ui-md-2 ui-fluid">
+        <label>Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true"
+            showButtonBar="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+            name="calendrVencimento" [(ngModel)]="lancamento.dataVencimento" #ctrlVencimento="ngModel" required>
+          <p-header>Título</p-header>
+          <p-footer>Rodapé</p-footer>
+        </p-calendar>
+        <app-msg [controle]="ctrlVencimento" erro="required" msg="Obrigatório"></app-msg>
+      </div>
+
+      <div class="ui-g-6 ui-md-2 ui-fluid">
+        <label>{{ ctrlTipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+        <p-calendar dateFormat="dd/mm/yy" name="calendrPagto" [(ngModel)]="lancamento.dataPagamento"></p-calendar>
+        <!-- Como não preciso desse controle em nenhum outro lugar, não preciso identicar com '#'-->
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Descrição {{ ctrlDescricao.errors | json }}</label>
+        <input pInputText type="text" name="txtDescricao"
+              [(ngModel)]="lancamento.descricao" #ctrlDescricao="ngModel"
+              required minlength="5">
+
+        <app-msg [controle]="ctrlDescricao" erro="required" msg="Informe uma descrição"></app-msg>
+        <app-msg [controle]="ctrlDescricao" erro="minlength" msg="Mínimo de {{ ctrlDescricao.errors?.minlength?.requiredLength }} caracteres.
+        Você digitou apenas {{ ctrlDescricao.errors?.minlength?.actualLength }}"></app-msg>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Valor</label>
+        <input pInputText type="text" placeholder="0,00" currencyMask name="txtValor"
+              [(ngModel)]="lancamento.valor" #ctrlValor="ngModel" required>
+        <app-msg [controle]="ctrlValor" erro="required" msg="Informe um valor"></app-msg>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Categoria {{ ctrlCategoria.value }}</label>
+        <p-dropdown [options]="categorias" placeholder="Selecione" [autoWidth]="false"
+            name="cboCategoria" [(ngModel)]="lancamento.categoria.codigo" #ctrlCategoria="ngModel"
+            required>
+        </p-dropdown>
+        <app-msg [controle]="ctrlCategoria" erro="required" msg="Selecione uma categoria"></app-msg>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Pessoa {{ ctrlPessoa.value }}</label>
+        <p-dropdown [options]="pessoas" placeholder="Selecione" [autoWidth]="false" filter="true"
+            name="cboPessoa" [(ngModel)]="lancamento.pessoa.codigo" #ctrlPessoa="ngModel"
+          required>
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Observação</label>
+        <textarea pInputTextarea rows="3" name="txtObs" [(ngModel)]="lancamento.observacao"></textarea>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="frmLancamento.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo(frmLancamento)"></button>
+        <!--    Dava pra colocar um routerlink no botão. Feito assim, para mostrar naveg programatica-->
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+    <form #usuarioForm="ngForm" (ngSubmit)="salvar(usuarioForm)">
+      <div class="ui-g">
+        <div class="ui-g-7">
+          <label>Nome</label>
+          <input type="text" name="txtNome" ngModel>
+        </div>
+
+        <div class="ui-g-7">
+          <label>E-mail</label>
+          <input type="text" name="txtEmail" ngModel>
+        </div>
+
+        <div class="ui-g-7">
+          <label>Profissão</label>
+          <select name="cboProfissao" [ngModel]="profissaoSelecionada">
+            <!--          [ngModel]="profissaoSelecionada : modelo->view"
+              nesse caso, usando form.ctrl.value pega o valor informado na view   -->
+            <option value="">Selecione</option>
+            <option *ngFor="let prof of listaProfissoes" [value]="prof"> <!-- value="{{ prof }}" outra forma-->
+              {{ prof }}
+            </option>
+
+          </select>
+        </div>
+
+        <div class="ui-g-7">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+
+
+      </div>
+    </form>
+
+  </div>
+<!--
+  ngModel (sem nada) : apenas registra o controle no ngForm. Cria uma instancia FormControl que permite
+                  gerenciar as propriedade do controle
+  [ngModel]="valorCampo" Property binding
+      Neste caso, modelo->template, o que for alterado no modelo será mostrado na view
+  (ngModel)="valorcampo" EventBinding
+      acho q é só para eventos
+  [(ngModel)]="valorcampo" : modelo <-> template
+  vai sincronizar o valor informado na view com o valor no modelo, e vice versa.
+
+  Qdo faço >>#ctrl="ngModel"<< estou criando uma variavel de referencia na view para ter acesso ao ngModel
+  que esta no modelo
+
+   Como o ngModel é um objeto do typescript, para poder verificar suas propriedades aqui do template,
+   precisamos vincular. Para isso, usa-se o #refctrl, assim eu exporto a diretiva para o template local. Dai
+   poderei acessar varias propriedades  em control.propriedade, mas propriedades como
+    dirty, valid, value, prestinie, etc estao disponiveis diretamente.
+
+   Ao usar o ngModel dentro de tags <form>, você também precisará fornecer um atributo name
+     para que o controle possa ser registrado com o formulário pai sob esse nome.
+
+  Vale a pena notar que, no contexto de um formulário pai, muitas vezes você pode ignorar a
+   vinculação unidirecional ou bidirecional porque o formulário pai sincronizará o valor
+   para você. Você pode acessar suas propriedades exportando-as para uma variável de modelo
+   local usando ngForm (ex: # f = "ngForm"). Então você pode passá-lo onde ele precisa ser enviado.
+
+Se você precisar preencher os valores iniciais em seu formulário, basta usar uma ligação unidirecional
+para ngModel, mas desde que você use o valor do formulário exportado em vez do valor do modelo de domínio
+no envio.
+
+
+-->

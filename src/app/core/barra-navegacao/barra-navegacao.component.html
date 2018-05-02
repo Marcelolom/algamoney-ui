@@ -1,0 +1,29 @@
+<nav class="barra-navegacao">
+  <div class="meu-container">
+    <div class="ui-g">
+      <div class="ui-g-12">
+          <a href="javascript:;" class="btn-navegacao" (click)="abrirMenu()"><i class="fa fa-bars"></i></a>
+          <button type="button" (click)="criarNovoAccessToken()" [disabled]="false">Novo access token</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra Lateral -->
+  <div id="barra-lateral" class="navegacao-lateral" [style.width]="getLargura()">
+      <a href="javascript:void(0)" class="btn-fechar" (click)="fecharMenu()">&times;</a>
+      <a routerLink="/lancamentos" routerLinkActive="linkativo" (click)="fecharMenu()"
+        *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">Lançamentos</a>
+      <a routerLink="/pessoas" routerLinkActive="linkativo" (click)="fecharMenu()"
+        *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')">Pessoas</a>
+      <!-- linkativo é uma classe css do componente  -->
+
+      <a href="#">Categorias</a>
+      <a class="ultima" (click)="logout()" >Logout</a>
+      <!-- colcando somente href="/lancamentos" funciona, mas nao é o certo. Recarrega tudo  -->
+      <!-- O certo é usar o routerLink="/lancamentos"  -->
+      <p>Usuário logado:</p>
+      <p>{{ auth.jwtPayload?.nome }}</p>
+
+  </div>
+
+</nav>

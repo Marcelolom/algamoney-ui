@@ -1,0 +1,42 @@
+<div class="meu-container">
+  {{ autenticacaoService.jwtPayload | json }}
+  <div class="flex-container">
+    <div>
+
+      <form autocomplete="on" #frmLogin="ngForm">
+
+        <div class="ui-g ui-fluid">
+
+          <div class="ui-g-12">
+            <p>Acesso</p>
+          </div>
+
+          <div class="ui-g-12">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-user-o"></i></span>
+                <input pInputText type="email" name="usuario" placeholder="E-mail" ngModel required #ctrlUsuario autofocus="true">
+            </div>
+          </div>
+
+          <div class="ui-g-12">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+                <input pInputText type="password" name="senha" placeholder="Senha" ngModel required #ctrlSenha>
+            </div>
+          </div>
+
+          <div class="ui-g-12">
+            <button pButton type="submit" label="Login" [disabled]="!frmLogin.valid"
+                    (click)="fazerLogin(ctrlUsuario.value, ctrlSenha.value); "></button>
+          </div>
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,88 @@
+<div class="meu-container">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
+
+      <div class="ui-g-12">
+        <h1>Pessoas</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="txtNome" [(ngModel)]="filtro.nome">
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!--   Tabela    -->
+  <div class="ui-g">
+    <div class="ui-g-12">
+
+      <p-table #ctrlTabela [value]="pessoas" lazy="true" paginator="true" responsive="true"
+            [rows]="filtro.itensPorPagina" [totalRecords]="totalRegistros"
+            (onLazyLoad)="ocorreuPaginacao($event)" rowHover="true">
+
+        <ng-template pTemplate="caption">
+          Pessoas: {{ totalRegistros }} registro(s) encontrado(s).
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="col-header-90px"></th>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th class="col-header-90px">Estado</th>
+            <th class="col-header-170px">Ativo?</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-pessoa>
+          <tr>
+            <td class="col-centro">
+              <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/pessoas', pessoa.codigo]"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pessoa)"></button>
+            </td>
+            <td>
+              <span class="ui-column-title">Nome:</span>
+              {{pessoa.nome}}
+            </td>
+            <td>
+              <span class="ui-column-title">Cidade:</span>
+              {{pessoa.endereco.cidade}}
+            </td>
+            <td class="col-centro">
+              <span class="ui-column-title">Estado:</span>
+              {{pessoa.endereco.estado}}
+            </td>
+            <td class="col-centro">
+              <span class="ui-column-title">Status:</span>
+              <p-inputSwitch onLabel="Sim" offLabel="Não" [pTooltip]="pessoa.ativo ? 'desativar' : 'ativar'"
+                    tooltipPosition="bottom" [(ngModel)]="pessoa.ativo" (onChange)="mudarStatus(pessoa)">
+              </p-inputSwitch>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-colunas>
+          <tr>
+            <td colspan="5">
+              Nenhum registro disponível
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    <!--  fim tabela   -->
+    </div>
+  </div>
+
+  <div class="ui-g-12">
+    <a pButton label="Incluir pessoa" routerLink="/pessoas/nova"></a>
+  </div>
+
+</div>

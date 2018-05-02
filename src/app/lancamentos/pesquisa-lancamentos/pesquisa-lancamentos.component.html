@@ -1,0 +1,128 @@
+<div class="meu-container">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisarResumo()">
+
+      <div class="ui-g-12">
+        <h1>Lançamentos</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text" name="txtDescricao" [(ngModel)]="filtro.descricao">
+      </div>
+
+      <div class="ui-g-12">
+        <label>Vencimento</label>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <label>De : </label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true" showButtonBar="true" [monthNavigator]="true"
+          [yearNavigator]="true" yearRange="2000:2030" name="calendrDe" [(ngModel)]="filtro.dataVencimentoInicio" [inputStyle]="{ width: '95px' }">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <label>Até: </label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true" showButtonBar="true" [monthNavigator]="true"
+          [yearNavigator]="true" yearRange="2000:2030" name="calendrAte" [(ngModel)]="filtro.dataVencimentoFim" [inputStyle]="{ width: '95px' }">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-2">
+        <button pButton type="submit" label="Pesquisar" icon="{{ carregando ? 'fa fa-spinner fa-spin fa-fw' : '' }}"></button>
+      </div>
+
+      <!-- ao inves de coloar os componentes abaixo, preferi apenas colocar icone no botao pesquisar
+        <div class="ui-g-12 ui-md-1" *ngIf="carregando">
+            <p-progressBar mode="indeterminate" [style]="{'height': '25px'}" ></p-progressBar>
+        </div>
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <div class="ui-g-12 ui-md-1" *ngIf="carregando">
+          <p-progressSpinner [style]="{width: '30px', height: '30px'}" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+        </div>
+      -->
+
+    </form>
+
+    <!--    Tabela    -->
+    <div class="ui-g">
+      <div class="ui-g-12">
+
+        <p-table #ctrlTabela [value]="lancamentos" lazy="true" paginator="true" responsive="true"
+              [rows]="filtro.itensPorPagina" [totalRecords]="totalRegistros"
+              (onLazyLoad)="ocorreuPaginacao($event)" rowHover="true" [loading]="carregando">
+
+          <ng-template pTemplate="caption">
+            LANÇAMENTOS CADASTRADOS: {{ totalRegistros }} registro(s) encontrado(s).
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-header-90px"></th>
+              <th>Pessoa</th>
+              <th>Descrição</th>
+              <th class="col-header-120px">Vencimento</th>
+              <th class="col-header-120px">Pagamento</th>
+              <th class="col-header-150px">Valor (R$)</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-lancamento>
+            <tr>
+              <td class="col-centro">
+                <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                  [routerLink]="['/lancamentos', lancamento.codigo]">
+                </button>
+                <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                  (click)="confirmarExclusao(lancamento)"
+                  [disabled]="!authService.temPermissao('ROLE_REMOVER_LANCAMENTO')">
+                </button>
+              </td>
+              <td>
+                <span class="ui-column-title">Pessoa:</span>
+                {{lancamento.pessoa}}
+              </td>
+              <td>
+                <span class="ui-column-title">Descrição:</span>
+                {{lancamento.descricao}}
+              </td>
+              <td class="col-centro">
+                <span class="ui-column-title">Vencimento:</span>
+                {{lancamento.dataVencimento | date:'dd/MM/yyyy'}}
+              </td>
+              <td class="col-centro">
+                <span class="ui-column-title">Pagamento:</span>
+                {{lancamento.dataPagamento | date:'dd/MM/y'}}
+              </td>
+              <td class="col-direita" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
+                <span class="ui-column-title" style="color: black">Valor:</span>
+                {{lancamento.valor | number:'1.2-2'}}  <!--  {{lancamento.valor | currency:'BRL':1.2-2}} -->
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">
+                Nenhum registro disponível
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+        <!--  fim tabela  -->
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <a pButton label="Novo Lançamento" routerLink="/lancamentos/novo"></a>
+      <!--
+        Link fixo:  routerLink="/lancamentos/novo"
+        Dinamico: [routerLink]=['/lancamentos', valor1, valor 2] -> /lancamentos/valor1
+      -->
+    </div>
+
+  </div>
+</div>

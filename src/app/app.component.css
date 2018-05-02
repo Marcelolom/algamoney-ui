@@ -1,0 +1,8 @@
+.col-data .ui-table .ui-table-tbody>tr>td {
+  width: 120px!important;
+  text-align: center!important;
+}
+.col-valor .ui-table .ui-table-tbody>tr>td {
+  width: 120px!important;
+  text-align: right!important;
+}

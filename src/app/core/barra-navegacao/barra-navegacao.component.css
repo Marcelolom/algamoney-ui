@@ -1,0 +1,83 @@
+.barra-navegacao {
+  padding: 10px 0; /* 10px - cima/baixo e 0px - esquerda/direita */
+  background-color: #1e94d2;
+}
+
+.btn-navegacao {
+  color: #fff;
+}
+
+/* Div da Navegação lateral */
+.navegacao-lateral {
+  height: 100%; /* 100% de altura */
+  width: 0px; /* 0 width - mudar com código */
+  position: fixed; /* Fica no lugar independente de scroll */
+  z-index: 999; /* Stay on top */
+  top: 0; /* colado em cima */
+  left: 0; /* colocado à esquerda*/
+  /* right: 0;  colocado à direita*/
+  /* margin: 0;  */
+  background-color: #3a3633; /* Cinza muito escuro*/
+  opacity: 0.95;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 s de efeito de transição */
+}
+
+/*  Itens do Menu */
+.navegacao-lateral a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: rgb(125,125,125);
+  display: block;
+  transition: 0.3s;
+}
+
+.ultima {
+  border-bottom: 1px solid #525151;
+  /* border-bottom: 1px solid red; */
+}
+
+/* Hover item do menu - muda a cor */
+.navegacao-lateral a:hover {
+  color: white;
+  cursor: pointer;
+  /* background-color: black; */
+  /* sombra: horiz-offset vert-offset  blur  shadow color with paocity*/
+  /* text-shadow: 0px 0px 2px rgba( 255, 255, 0, 0.5); */
+  text-shadow: 2px 2px 5px #FFFFFF, -2px -2px 5px #FFFFFF ;
+  transition: 1s;
+}
+
+/* Posição e estilo do botao fechar (top right corner) */
+.navegacao-lateral .btn-fechar {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/*  Link ativo*/
+.navegacao-lateral a.linkativo {
+  background-color: black;
+  color: #fff;
+}
+
+/* Em telas pequenas (menos q 450px de altura), mude o estilo da navegacao-lateral (less padding and a smaller font size) */
+@media (max-height: 450px) {
+  .navegacao-lateral {
+    padding-top: 15px;
+  }
+  .navegacao-lateral a {
+    font-size: 18px;
+  }
+}
+
+.navegacao-lateral p {
+  padding: 5px;
+  /* background-color: black; */
+  color: #fff;
+}
+

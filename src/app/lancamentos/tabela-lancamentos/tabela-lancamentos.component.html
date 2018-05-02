@@ -1,0 +1,61 @@
+<!--    Tabela    -->
+<p-table [value]="lancamentos" lazy="true" paginator="true" responsive="true"
+          [rows]="filtro.itensPorPagina" [totalRecords]="totalRegistros"
+          (onLazyLoad)="ocorreuPaginacao($event)">
+
+  <ng-template pTemplate="caption">
+    LANÇAMENTOS CADASTRADOS
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="col-header-90px"></th>
+      <th>Pessoa</th>
+      <th>Descrição</th>
+      <th class="col-header-120px">Vencimento</th>
+      <th class="col-header-120px">Pagamento</th>
+      <th class="col-header-150px">Valor (R$)</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-lancamento>
+    <tr>
+      <td class="col-centro">
+        <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></button>
+        <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+      </td>
+      <td>
+        <span class="ui-column-title">Pessoa:</span>
+        {{lancamento.pessoa}}
+      </td>
+      <td>
+        <span class="ui-column-title">Descrição:</span>
+        {{lancamento.descricao}}
+      </td>
+      <td class="col-centro">
+        <span class="ui-column-title">Vencimento:</span>
+        {{lancamento.dataVencimento | date:'dd/MM/yyyy'}}
+      </td>
+      <td class="col-centro">
+        <span class="ui-column-title">Pagamento:</span>
+        {{lancamento.dataPagamento | date:'dd/MM/y'}}
+      </td>
+      <td class="col-direita" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
+        <span class="ui-column-title" style="color: black">Valor:</span>
+        {{lancamento.valor | number:'1.2-2'}}
+          <!--
+            {{lancamento.valor | currency:'BRL':1.2-2}}
+          -->
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="6">
+        Nenhum registro disponível
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>
