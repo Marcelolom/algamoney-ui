@@ -34,15 +34,20 @@ export class PesquisaLancamentosComponent implements OnInit {
   carregando: boolean = true;     // pode ser usado na propriedade 'load' da table. Mostra icone ao carregar.
   @ViewChild('ctrlTabela') tabela: Table;// ctrlTabela- na view #ctrlTabela
 
+  // --------------------------------------------------------------------
+  // MÉTODO invocado ao iniciar
+  // --------------------------------------------------------------------
   ngOnInit(): void {
    this.tituloService.setTitle('Pesquisa de Lançamentos');
   }
 
-  // MÉTODO invocado ao clicar no btn Pesquisar ou ao submmit o formulário
+  // --------------------------------------------------------------------
+  // MÉTODO invocado ao clicar no btn Pesquisar ou no submmit o formulário
+  // --------------------------------------------------------------------
   pesquisarResumo(pag = 0) { // recebe pagina q quer pesquisar. Default = 0
     this.carregando = true; // mostrar icone carregando
 
-    this.filtro.pagina = pag; // define o numero de paginas
+    this.filtro.pagina = pag; // define o numero da pagina. Ver metodo ocorreuPaginacao
 
     // Recebe como parametro um objeto que pode conter descricao , dataVencimentoDe , dataVencimentoAte
     this.lancamentoService
@@ -55,13 +60,17 @@ export class PesquisaLancamentosComponent implements OnInit {
     .catch(erro => this.erroService.handleError(erro)); // trata erro
   }
 
+  // --------------------------------------------------------------------
   // MÉTODO invocado qdo houver uma paginação na tabela de lançamentos
+  // --------------------------------------------------------------------
   ocorreuPaginacao(evento: LazyLoadEvent) {
     const pagina = evento.first / evento.rows;
     this.pesquisarResumo(pagina);
   }
 
-  // METODO invocado ao clicar no botao excluir
+  // --------------------------------------------------------------------
+  // METODO invocado ao clicar no botao excluir da view
+  // --------------------------------------------------------------------
   confirmarExclusao(lancamento: any) {
     this.confirmacao.confirm({
       header: 'Exclusão de lançamento',
@@ -72,7 +81,9 @@ export class PesquisaLancamentosComponent implements OnInit {
     });
   }
 
-  // MÉTODO para excluir um lançamento
+  // --------------------------------------------------------------------
+  // MÉTODO para excluir um lançamento. Invocado por confirmarEclusão()
+  // --------------------------------------------------------------------
   excluir(lancamento: any) {
     this.lancamentoService.excluir(lancamento.codigo)
       .then( ()=> {
@@ -82,7 +93,9 @@ export class PesquisaLancamentosComponent implements OnInit {
       .catch(erro => this.erroService.handleError(erro)); // trata erro
   }
 
+  // --------------------------------------------------------------------
   // MÉTODO para dar um reset() na tabela
+  // --------------------------------------------------------------------
   atualizarTabela() {
     this.tabela.reset();
   }

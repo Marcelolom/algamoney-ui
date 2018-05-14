@@ -21,6 +21,7 @@ export class CadastroLancamentoComponent implements OnInit{
   categorias = [];
   pessoas = [];
   lancamento = new Lancamento();
+  uploadEmAndamento = false;
 
   constructor(
     private categoriaService: CategoriaService,
@@ -41,7 +42,7 @@ export class CadastroLancamentoComponent implements OnInit{
 
     // Recuperando paramentros na url
     // this.rota.snapshot.params['codLanc'] -> retorna codigo como string
-    // codLanc esta declarado no app.module
+    // codLanc esta declarado no app.module - rotas
     const codigoLancamento = this.rota.snapshot.params['codLanc'];
     if (codigoLancamento) { // codLanc foi passado. Existe
       if (!Number.isNaN(codigoLancamento)) { //Se for um numnero
@@ -65,8 +66,8 @@ export class CadastroLancamentoComponent implements OnInit{
   carregarLancamentoPorCodigo(paramCodigo: number) {
     this.lancamentoService.buscarPorCodigo(paramCodigo)
     .then(lancamentoRetorno => {
-      console.log("Buscar por codigo. retornou algo");
-      console.log(lancamentoRetorno);
+      // console.log("Buscar por codigo. retornou algo");
+      // console.log(lancamentoRetorno);
       this.lancamento = lancamentoRetorno;
     })
     .catch(erro => {
@@ -109,8 +110,8 @@ export class CadastroLancamentoComponent implements OnInit{
   alterarLancamento(form: FormControl) {
     this.lancamentoService.atualizar(this.lancamento)
     .then(lancamentoAlterado => {
-      this.msgService.add({severity:'success', summary:'Ok!', detail:'Lançamento salvo'});
-      this.lancamento = lancamentoAlterado; //achei desnecessário isso, mas a algaworks acha importante
+      this.msgService.add({severity:'success', summary:'Ok!', detail:'Lançamento salvo' });
+      this.lancamento = lancamentoAlterado; // achei desnecessário isso, mas a algaworks acha importante
     })
     .catch(erro => this.myErrorService.handleError(erro));
   }
@@ -120,7 +121,7 @@ export class CadastroLancamentoComponent implements OnInit{
   // ----------------------
   carregarCategorias() {
     this.categoriaService.listarTodas()
-      .then(categoriasRetorno => {
+      .then(categoriasRetorno => {              /* label / value é o table que pede assim  */
         this.categorias = categoriasRetorno.map(cat => ({ label: cat.nome, value: cat.codigo }));
       })
       .catch(erro => this.myErrorService.handleError(erro));
@@ -154,6 +155,36 @@ export class CadastroLancamentoComponent implements OnInit{
     this.tracadorDeRota.navigate(['lancamentos/novo']); //direciona para /lancamentos/novo
   }
 
+  // ----------------------------
+  // Metodos usados pelo fileUpload
+  // ----------------------------
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo(); // retorna <localhost:8080>/lancamentos/anexo
+  }
 
+  antesUploadAnexo(event) {
+    event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    this.uploadEmAndamento = true;
+  }
+
+  aoTerminarUploadAnexo(event) {
+    // Faz um salavrTemporario e Retorna { nome: <nome unico gerado> , url: null }
+    const anexoResposta = JSON.parse(event.xhr.response);
+    console.log('Nome do arquivo=',anexoResposta.nome);
+    console.log('url=',anexoResposta.url);
+    this.lancamento.anexo = anexoResposta.nome;
+    this.lancamento.urlAnexo = anexoResposta.url;
+    this.uploadEmAndamento = false;
+  }
+
+  removerAnexo() {
+    this.lancamento.anexo = null;
+    this.lancamento.urlAnexo = null;
+  }
+
+  erroUpload(event) {
+    this.msgService.add({severity:'error', summary:'Ok!', detail:'Erro ao tentar enviar anexo!' });
+    this.uploadEmAndamento = false;
+  }
 
 }

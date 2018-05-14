@@ -18,20 +18,23 @@
 
       <div class="ui-g-12 ui-md-4">
         <label>De : </label>
-        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true" showButtonBar="true" [monthNavigator]="true"
-          [yearNavigator]="true" yearRange="2000:2030" name="calendrDe" [(ngModel)]="filtro.dataVencimentoInicio" [inputStyle]="{ width: '95px' }">
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true"
+          showButtonBar="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+          name="calendrDe" [(ngModel)]="filtro.dataVencimentoInicio" [inputStyle]="{ width: '95px' }">
         </p-calendar>
       </div>
 
       <div class="ui-g-12 ui-md-4">
         <label>Até: </label>
-        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true" showButtonBar="true" [monthNavigator]="true"
-          [yearNavigator]="true" yearRange="2000:2030" name="calendrAte" [(ngModel)]="filtro.dataVencimentoFim" [inputStyle]="{ width: '95px' }">
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="true"
+            showButtonBar="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+            name="calendrAte" [(ngModel)]="filtro.dataVencimentoFim" [inputStyle]="{ width: '95px' }">
         </p-calendar>
       </div>
 
       <div class="ui-g-12 ui-md-2">
-        <button pButton type="submit" label="Pesquisar" icon="{{ carregando ? 'fa fa-spinner fa-spin fa-fw' : '' }}"></button>
+        <button pButton type="submit" label="Pesquisar"
+            icon="{{ carregando ? 'fa fa-spinner fa-spin fa-fw' : '' }}"></button>
       </div>
 
       <!-- ao inves de coloar os componentes abaixo, preferi apenas colocar icone no botao pesquisar
@@ -40,7 +43,8 @@
         </div>
         <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         <div class="ui-g-12 ui-md-1" *ngIf="carregando">
-          <p-progressSpinner [style]="{width: '30px', height: '30px'}" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+          <p-progressSpinner [style]="{width: '30px', height: '30px'}" strokeWidth="5"
+             fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
         </div>
       -->
 

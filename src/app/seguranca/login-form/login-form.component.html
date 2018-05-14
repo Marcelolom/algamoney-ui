@@ -28,6 +28,8 @@
           <div class="ui-g-12">
             <button pButton type="submit" label="Login" [disabled]="!frmLogin.valid"
                     (click)="fazerLogin(ctrlUsuario.value, ctrlSenha.value); "></button>
+              <!-- limpar o campo senha ->  fazerLogin(ctrlUsuario.value, ctrlSenha.value); senha.value=''  -->
+
           </div>
 
         </div>

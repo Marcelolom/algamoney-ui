@@ -19,10 +19,10 @@ export class CategoriaService {
   }
 
   listarTodas(): Promise<any> {
-    /* // header
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    myHeaders.append('Content-Type', 'application/json'); */
+                /* // header
+                const myHeaders = new Headers();
+                myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+                myHeaders.append('Content-Type', 'application/json'); */
 
     // Requisição
     //return this.http.get(`${this.categoriasURL}`, { headers: myHeaders })

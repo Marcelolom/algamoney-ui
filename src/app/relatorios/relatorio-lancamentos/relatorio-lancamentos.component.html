@@ -1,0 +1,37 @@
+<div class="meu-container">
+
+  <form #frmRel="ngForm" (ngSubmit)="gerar()">
+
+    <div class="ui-g">
+
+      <div class="ui-g-12 ui-fluid">
+
+        <div class="ui-g-12">
+          <h1> Relatório de lançamentos por pessoa </h1>
+        </div>
+
+        <div class="ui-g-10 ui-md-3 ui-lg-2">
+          <label>Vencimento de:</label>
+          <p-calendar dateFormat="dd/mm/yy" required
+            [(ngModel)]="periodoInicio" name="txtInicio">
+          </p-calendar>
+        </div>
+
+        <div class="ui-g-10 ui-md-3 ui-lg-2">
+          <label>até</label>
+          <p-calendar dateFormat="dd/mm/yy" required
+            [(ngModel)]="periodoFim" name="txtFim">
+          </p-calendar>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Ver relatório" [disabled]="frmRel.invalid"></button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

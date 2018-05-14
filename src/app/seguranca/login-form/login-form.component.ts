@@ -34,9 +34,8 @@ export class LoginFormComponent implements OnInit {
   // ----------------------------------------------
   fazerLogin(usuario: string, senha: string) {
     this.autenticacaoService.logar(usuario, senha)
-    .then(() => {
-      console.log('Tudo ok.');
-      this.rota.navigate(['/lancamentos']);
+    .then(() => {  // Tudo ok
+      this.rota.navigate(['/painel']); /*  pagina inicial  */
     })
     .catch(erro => {
       this.campoSenha.nativeElement.focus(); // foco na senha

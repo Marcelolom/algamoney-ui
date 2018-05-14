@@ -1,6 +1,6 @@
 
 import { Http, Headers } from '@angular/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -14,15 +14,14 @@ import { environment } from '../../environments/environment';
 */
 
 @Injectable()
-export class AutenticacaoService {
+export class AutenticacaoService  {
+
   // ----------------------------------------------
   // Propriedades
   // ----------------------------------------------
-  //tokenUrl = 'http://localhost:8080/oauth/token';
+  //tokenUrl = 'http://localhost:8080/oauth/token'
   tokenUrl: string;
-  jwtPayload: any; // O payload é uma das 3 partes do jwtToken
-  rfshToken: string;
-
+  jwtPayload: any; /*  O payload é uma das 3 partes do jwtToken  */
   // ----------------------------------------------
   // Construtor
   // ----------------------------------------------
@@ -72,7 +71,7 @@ export class AutenticacaoService {
     const myHeaders = new Headers(); //Header
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
     myHeaders.append('Authorization', 'Basic YW5ndWxhcjphbmcxMjM0');
-    myHeaders.append('Accept', 'application/json');
+    //myHeaders.append('Accept', 'application/json');
 
     const body = 'grant_type=refresh_token';  // Body
 

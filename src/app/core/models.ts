@@ -17,12 +17,22 @@ export class Endereco {
   estado: string;
 }
 
+export class Contato {
+  codigo: number;
+  nome: string;
+  email: string;
+  telefone: string;
+}
+
 export class Pessoa {
   codigo: number; // basta o codigo
   nome: string;
   ativo: boolean;
   endereco = new Endereco();
+  contatos = new Array<Contato>();
 }
+
+
 
 export class Lancamento {
   codigo: number;
@@ -34,4 +44,6 @@ export class Lancamento {
   observacao: string;
   pessoa = new Pessoa();
   categoria = new Categoria();
+  anexo: string;
+  urlAnexo: string;
 }

@@ -1,0 +1,23 @@
+<div class="meu-container">
+
+  <div class="ui-g">
+
+    <div class="ui-g-12">
+      <h1>Painel de dados estatísticos</h1>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="Lançamentos por categoria">
+        <p-chart type="doughnut" [data]="pizzaDados" [options]="opcoesPizza"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="Lançamentos por dia neste mês">
+        <p-chart type="line" [data]="linhaDados" [options]="opcoesLinha"></p-chart>
+      </p-panel>
+    </div>
+
+  </div>
+
+</div>

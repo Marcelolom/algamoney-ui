@@ -30,7 +30,15 @@ a {
   text-align: center;
   color: white;
   background-color: #69b3f5;
+  width: 80%;
 }
+
+
+.ui-fieldset .ui-fieldset-legend {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
 
 /* Aplica a regra abaixo soemnte se espacço disponivel >= 1200 px*/
 @media (max-height: 600px) {

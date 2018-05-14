@@ -3,7 +3,7 @@ import { MyErrorHandlerService } from './../../core/my-error-handler.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 
-import { Pessoa } from './../../core/models';
+import { Pessoa, Contato } from './../../core/models';
 import { PessoasService } from '../pessoas.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Title } from '@angular/platform-browser';
@@ -118,14 +118,11 @@ export class CadastroPessoaComponent implements OnInit{
     // Existe um bug no form.reset(). Tudo indica que ele reseta assincronamente, assim o new lancamento parece
     // ocorrer antes do reset. Deixando de inicializar valores, no caso aqui, o botao Receita/Despesa não
     // selecionadava nenhuma das opções. O settimeout do javascript resolveu o problema
-    setTimeout(() => {
-      this.pessoa = new Pessoa();
-    }, 1);
-    form
+    setTimeout(() => { this.pessoa = new Pessoa(); }, 1);
 
-  // Faz uma navegação programática. Navigate recebe array
-  // Mas tbem dava pra colocar um routerlink na view
-  this.tracadorDeRota.navigate(['pessoas/nova']); //direciona para /pessoas/nova
-}
+    // Faz uma navegação programática. Navigate recebe array
+    // Mas tbem dava pra colocar um routerlink na view
+    this.tracadorDeRota.navigate(['pessoas/nova']); //direciona para /pessoas/nova
+  }
 
 }

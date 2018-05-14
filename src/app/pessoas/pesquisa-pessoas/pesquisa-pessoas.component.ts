@@ -6,6 +6,7 @@ import { MyErrorHandlerService } from './../../core/my-error-handler.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { PessoasService, PessoaFiltro } from './../pessoas.service';
+import { AutenticacaoService } from './../../seguranca/autenticacao.service';
 
 @Component({
   selector: 'app-pesquisa-pessoas',
@@ -16,6 +17,7 @@ import { PessoasService, PessoaFiltro } from './../pessoas.service';
 export class PesquisaPessoasComponent implements OnInit {
 
   constructor(
+    private authService: AutenticacaoService,
     private pessoasService: PessoasService,
     private confirmacao: ConfirmationService,
     private msgService: MessageService,

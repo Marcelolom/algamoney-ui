@@ -29,7 +29,12 @@ export class LancamentoService {
   // a biblioteca insere automaticamnte
   // constructor(private http: Http) { }
   constructor(private http: AuthHttp) {
-    this.lancamentoURL = `${environment.apiUrl}/lancamentos`;
+    this.lancamentoURL = `${environment.apiUrl}/lancamentos`; // ver environments.ts
+  }
+
+  // Metodo q retona a url : Utilizado pelo fileupload
+  urlUploadAnexo(): string {
+    return `${this.lancamentoURL}/anexo`;
   }
 
   //  -----------------------------------------------
@@ -37,27 +42,25 @@ export class LancamentoService {
   //  Recebe como parametro um objeto que pode conter descricao, dataVencimentoDe, dataVencimentoAte
   //  -----------------------------------------------
   listarTodosResumo(filtro: LancamentoFiltro): Promise<any> {
-    /* // header
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    myHeaders.append('Content-Type', 'application/json');*/
+                /* // header
+                const myHeaders = new Headers();
+                myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+                myHeaders.append('Content-Type', 'application/json');*/
 
     // paramentros de pesquisa da URL. Ttrata os parametros, se houver
     const paramsPesquisa = new URLSearchParams();
-    paramsPesquisa.set('page', filtro.pagina.toString());
+    paramsPesquisa.set('page', filtro.pagina.toString());       // params de paginação
     paramsPesquisa.set('size', filtro.itensPorPagina.toString());
 
-    if (filtro.descricao) {
+    if (filtro.descricao) { // Se informou descricao
       paramsPesquisa.set('descricao', filtro.descricao);
     }
 
-    if (filtro.dataVencimentoInicio) {
-      // Data inicial
-      let inicio: Moment = moment(filtro.dataVencimentoInicio);
-      paramsPesquisa.set('dataVencimentoDe', moment(filtro.dataVencimentoInicio).format("YYYY-MM-DD"));
+    if (filtro.dataVencimentoInicio) { // Se informou incio
+      let inicio: Moment = moment(filtro.dataVencimentoInicio); // Data inicial
+      paramsPesquisa.set('dataVencimentoDe', moment(filtro.dataVencimentoInicio).format("YYYY-MM-DD")); // formato aceito api
 
-      //  Data final
-      if (filtro.dataVencimentoFim) {
+      if (filtro.dataVencimentoFim) {  //  Data final
         let fim: Moment = moment(filtro.dataVencimentoFim);
         // Valida data final. Se menor q a inicial vai desconsiderar a final
         if (fim.diff(inicio) > 0) {
@@ -70,7 +73,7 @@ export class LancamentoService {
     if (filtro.dataVencimentoFim) {
       let fim: Moment = moment(filtro.dataVencimentoFim);
       paramsPesquisa.set('dataVencimentoAte', moment(filtro.dataVencimentoFim).format("YYYY-MM-DD"));
-    } // --------
+    }
 
     // return this.http.get(`${this.lancamentoURL}?resumo`, { headers: myHeaders, search: paramsPesquisa })
     return this.http.get(`${this.lancamentoURL}?resumo`, { search: paramsPesquisa })
@@ -78,7 +81,7 @@ export class LancamentoService {
     .then(response => {
       const respJson = response.json();
       const respContent = respJson.content; // registros retornados da consulta
-      const retorno = { respLancamentos: respContent, total: respJson.totalElements };
+      const retorno = { respLancamentos: respContent, total: respJson.totalElements }; // cria objeto
       return retorno; // o retorno cria um objeto e acrescenta o total de elementos
     });
     //.toPromise()
@@ -101,10 +104,10 @@ export class LancamentoService {
   // Excluir (DELETE)
   // --------------------------------------------------
   excluir(codigo: number): Promise<void> {
-    /* // header
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    myHeaders.append('Content-Type', 'application/json'); */
+                /* // header
+                const myHeaders = new Headers();
+                myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+                myHeaders.append('Content-Type', 'application/json'); */
 
     // Requisição
     // return this.http.delete(`${this.lancamentoURL}/${codigo}`, { headers: myHeaders })
@@ -117,10 +120,10 @@ export class LancamentoService {
   //  Incluir (POST)
   //  ------------------------------------------------
   incluir(lancamento: Lancamento): Promise<Lancamento> {
-    /* // header
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    myHeaders.append('Content-Type', 'application/json'); */
+                  /* // header
+                  const myHeaders = new Headers();
+                  myHeaders.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+                  myHeaders.append('Content-Type', 'application/json'); */
 
     // Requisição Http.post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>
     return this.http.post(this.lancamentoURL, JSON.stringify(lancamento))

@@ -17,6 +17,8 @@ import { LancamentoService } from '../lancamentos/lancamento.service';
 import { PessoasService } from '../pessoas/pessoas.service';
 import { CategoriaService } from './../categorias/categoria.service';
 import { AutenticacaoService } from './../seguranca/autenticacao.service';
+import { RelatoriosService } from './../relatorios/relatorios.service';
+import { PainelService } from './../painel/painel.service';
 
 import { BarraNavegacaoComponent } from './barra-navegacao/barra-navegacao.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
@@ -64,8 +66,10 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     LancamentoService,
     PessoasService,
     CategoriaService,
+    RelatoriosService,
     Title,
     AutenticacaoService,
+    PainelService,
     JwtHelper
   ]
 })

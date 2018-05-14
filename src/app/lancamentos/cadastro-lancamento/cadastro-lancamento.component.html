@@ -73,9 +73,39 @@
         <textarea pInputTextarea rows="3" name="txtObs" [(ngModel)]="lancamento.observacao"></textarea>
       </div>
 
+      <div class="ui-g-6 ui-g-offset-6 ui-md-3 ui-md-offset-9 ui-fluid" *ngIf="!lancamento.anexo">
+        <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
+          chooseLabel="Anexar arquivo" accept="image/*,application/*" [url]="urlUploadAnexo"
+          (onBeforeSend)="antesUploadAnexo($event)"
+          (onUpload)="aoTerminarUploadAnexo($event)"
+          (onError)="erroUpload($event)"
+          [hidden]="uploadEmAndamento"></p-fileUpload>
+        <p-progressSpinner [style]="{width: '25px', height: '25px'}"
+            strokeWidth="8" [hidden]="!uploadEmAndamento"></p-progressSpinner>
+      </div>
+
+      <div class="ui-g-12 ui-fluid" *ngIf="lancamento.anexo && !lancamento.urlAnexo">
+        <label>Ok! Quase lá! Clique em salvar.</label>
+      </div>
+
+      <div class="ui-g-12" *ngIf="lancamento.anexo && lancamento.urlAnexo">
+        <i class="fa fa-paperclip"></i>
+        <label>Arquivo anexo</label>
+        <label>:</label>
+        <a target="_blank" pTooltip="Visualizar anexo" tooltipPosition="top" [href]="lancamento.urlAnexo">
+            {{ lancamento.anexo }}
+        </a>
+        <button pButton type="button" class="ui-button-danger"
+            icon="fa-close" pTooltip="Remover anexo"
+            tooltipPosition="top" (click)="removerAnexo()"></button>
+      </div>
+
+      <hr style="width: 100%">
+
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar" [disabled]="frmLancamento.invalid"></button>
-        <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo(frmLancamento)"></button>
+        <button pButton type="submit" label="Salvar" [disabled]="frmLancamento.invalid || uploadEmAndamento"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo(frmLancamento)"
+              [disabled]="uploadEmAndamento"></button>
         <!--    Dava pra colocar um routerlink no botão. Feito assim, para mostrar naveg programatica-->
         <a routerLink="/lancamentos">Voltar para a pesquisa</a>
       </div>

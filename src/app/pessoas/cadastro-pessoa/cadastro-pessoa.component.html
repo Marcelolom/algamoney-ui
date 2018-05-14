@@ -72,6 +72,12 @@
         </div>
 
         <div class="ui-g-12">
+          <p-fieldset legend="Contato(s)">
+            <app-contato [contatos]="pessoa.contatos"></app-contato>
+          </p-fieldset>
+        </div>
+
+        <div class="ui-g-12">
             <button pButton type="submit" label="Salvar" [disabled]="frmPessoa.invalid" ></button>
             <button pButton type="button" label=" {{ frmPessoa.dirty ? 'Limpar tudo' : 'Novo'  }}" class="ui-button-info" (click)="novo(frmPessoa)"></button>
             <!--    Dava pra colocar um routerlink no botão. Feito assim, para mostrar naveg programatica-->
@@ -79,6 +85,7 @@
         </div>
 
       </div>
-
     </form>
-  </div>
+</div>
+
+
